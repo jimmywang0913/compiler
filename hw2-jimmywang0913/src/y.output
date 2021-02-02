@@ -1,0 +1,1766 @@
+Terminals unused in grammar
+
+   KWdef
+   KWfalse
+   KWtrue
+   '!'
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: program_name variable_const_declaration func_define_declaration compound_statement KWend
+
+    2 variable_const_declaration: %empty
+    3                           | vcd2
+
+    4 vcd2: variable_declaration
+    5     | const_declaration
+    6     | vcd2 variable_declaration
+    7     | vcd2 const_declaration
+
+    8 func_define_declaration: %empty
+    9                        | func_declaration
+
+   10 variable_declaration: KWvar id_list ':' variable_type ';'
+   11                     | array_declaration
+
+   12 array_declaration: KWvar id_list ':' integer KWof variable_type ';'
+
+   13 variable_type: KWarray
+   14              | KWboolean
+   15              | KWreal
+   16              | KWstring
+   17              | KWinteger
+
+   18 const_declaration: KWvar id_list ':' datatype ';'
+
+   19 datatype: integer
+   20         | floatt
+   21         | string
+
+   22 program_name: id ';'
+
+   23 func_declaration: functiond
+   24                 | func_declaration functiond
+
+   25 functiond: id '(' argument ')' ':' variable_type functiond2
+
+   26 functiond2: ';'
+   27           | statement KWend
+
+   28 argument: argument2
+   29         | argument ';' argument2
+
+   30 argument2: id_list ':' variable_type
+
+   31 id_list: id
+   32        | id_list ',' id
+
+   33 statement: %empty
+   34          | statement2
+
+   35 statement2: compound_statement
+   36           | simple_statement
+   37           | conditional_statement
+   38           | while_statement
+   39           | for_statement
+   40           | return_statement
+   41           | procedure_statement
+   42           | statement2 compound_statement
+   43           | statement2 simple_statement
+   44           | statement2 conditional_statement
+   45           | statement2 while_statement
+   46           | statement2 for_statement
+   47           | statement2 return_statement
+   48           | statement2 procedure_statement
+
+   49 compound_statement: KWbegin variable_const_declaration statement KWend
+
+   50 simple_statement: variable_reference aaa expression
+   51                 | KWprint variable_reference
+   52                 | KWprint expression
+   53                 | KWread variable_reference
+
+   54 variable_reference: id
+   55                   | array
+
+   56 array: id array2
+
+   57 array2: '[' expression ']'
+   58       | array2 '[' expression ']'
+
+   59 conditional_statement: KWif expression KWthen compound_statement KWelse compound_statement KWend KWif
+   60                      | KWif expression KWthen compound_statement KWend KWif
+
+   61 while_statement: KWwhile expression KWdo compound_statement KWend KWdo
+
+   62 for_statement: KWfor id aaa integer KWto integer KWdo compound_statement KWend KWdo
+
+   63 return_statement: KWreturn expression ';'
+
+   64 procedure_statement: id '(' expression_list ')' ';'
+
+   65 expression_list: expression
+   66                | expression_list ',' expression
+
+   67 expression: expression_val
+   68           | expression operator expression_val
+
+   69 expression_val: integer
+   70               | floatt
+
+   71 operator: negative
+   72         | '*'
+   73         | '/'
+   74         | mod
+   75         | '+'
+   76         | '-'
+   77         | '<'
+   78         | bbb
+   79         | ccc
+   80         | ddd
+   81         | '>'
+   82         | '='
+   83         | and
+   84         | or
+   85         | nott
+
+   86 nott: not not
+   87     | nott not
+
+   88 negative: '-' '-'
+   89         | negative '-'
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'!' (33)
+'(' (40) 25 64
+')' (41) 25 64
+'*' (42) 72
+'+' (43) 75
+',' (44) 32 66
+'-' (45) 76 88 89
+'/' (47) 73
+':' (58) 10 12 18 25 30
+';' (59) 10 12 18 22 26 29 63 64
+'<' (60) 77
+'=' (61) 82
+'>' (62) 81
+'[' (91) 57 58
+']' (93) 57 58
+error (256)
+id (258) 22 25 31 32 54 56 62 64
+KWarray (259) 13
+KWbegin (260) 49
+KWboolean (261) 14
+KWdef (262)
+KWdo (263) 61 62
+KWelse (264) 59
+KWend (265) 1 27 49 59 60 61 62
+KWfalse (266)
+KWfor (267) 62
+KWif (268) 59 60
+KWof (269) 12
+KWprint (270) 51 52
+KWread (271) 53
+KWreal (272) 15
+KWstring (273) 16
+KWthen (274) 59 60
+KWto (275) 62
+KWtrue (276)
+KWreturn (277) 63
+KWinteger (278) 17
+KWvar (279) 10 12 18
+KWwhile (280) 61
+mod (281) 74
+aaa (282) 50 62
+bbb (283) 78
+ccc (284) 79
+ddd (285) 80
+integer (286) 12 19 62 69
+floatt (287) 20 70
+string (288) 21
+and (289) 83
+or (290) 84
+not (291) 86 87
+
+
+Nonterminals, with rules where they appear
+
+$accept (52)
+    on left: 0
+program (53)
+    on left: 1, on right: 0
+variable_const_declaration (54)
+    on left: 2 3, on right: 1 49
+vcd2 (55)
+    on left: 4 5 6 7, on right: 3 6 7
+func_define_declaration (56)
+    on left: 8 9, on right: 1
+variable_declaration (57)
+    on left: 10 11, on right: 4 6
+array_declaration (58)
+    on left: 12, on right: 11
+variable_type (59)
+    on left: 13 14 15 16 17, on right: 10 12 25 30
+const_declaration (60)
+    on left: 18, on right: 5 7
+datatype (61)
+    on left: 19 20 21, on right: 18
+program_name (62)
+    on left: 22, on right: 1
+func_declaration (63)
+    on left: 23 24, on right: 9 24
+functiond (64)
+    on left: 25, on right: 23 24
+functiond2 (65)
+    on left: 26 27, on right: 25
+argument (66)
+    on left: 28 29, on right: 25 29
+argument2 (67)
+    on left: 30, on right: 28 29
+id_list (68)
+    on left: 31 32, on right: 10 12 18 30 32
+statement (69)
+    on left: 33 34, on right: 27 49
+statement2 (70)
+    on left: 35 36 37 38 39 40 41 42 43 44 45 46 47 48, on right: 34
+    42 43 44 45 46 47 48
+compound_statement (71)
+    on left: 49, on right: 1 35 42 59 60 61 62
+simple_statement (72)
+    on left: 50 51 52 53, on right: 36 43
+variable_reference (73)
+    on left: 54 55, on right: 50 51 53
+array (74)
+    on left: 56, on right: 55
+array2 (75)
+    on left: 57 58, on right: 56 58
+conditional_statement (76)
+    on left: 59 60, on right: 37 44
+while_statement (77)
+    on left: 61, on right: 38 45
+for_statement (78)
+    on left: 62, on right: 39 46
+return_statement (79)
+    on left: 63, on right: 40 47
+procedure_statement (80)
+    on left: 64, on right: 41 48
+expression_list (81)
+    on left: 65 66, on right: 64 66
+expression (82)
+    on left: 67 68, on right: 50 52 57 58 59 60 61 63 65 66 68
+expression_val (83)
+    on left: 69 70, on right: 67 68
+operator (84)
+    on left: 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85, on right:
+    68
+nott (85)
+    on left: 86 87, on right: 85 87
+negative (86)
+    on left: 88 89, on right: 71 89
+
+
+State 0
+
+    0 $accept: . program $end
+
+    id  shift, and go to state 1
+
+    program       go to state 2
+    program_name  go to state 3
+
+
+State 1
+
+   22 program_name: id . ';'
+
+    ';'  shift, and go to state 4
+
+
+State 2
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 5
+
+
+State 3
+
+    1 program: program_name . variable_const_declaration func_define_declaration compound_statement KWend
+
+    KWvar  shift, and go to state 6
+
+    $default  reduce using rule 2 (variable_const_declaration)
+
+    variable_const_declaration  go to state 7
+    vcd2                        go to state 8
+    variable_declaration        go to state 9
+    array_declaration           go to state 10
+    const_declaration           go to state 11
+
+
+State 4
+
+   22 program_name: id ';' .
+
+    $default  reduce using rule 22 (program_name)
+
+
+State 5
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 6
+
+   10 variable_declaration: KWvar . id_list ':' variable_type ';'
+   12 array_declaration: KWvar . id_list ':' integer KWof variable_type ';'
+   18 const_declaration: KWvar . id_list ':' datatype ';'
+
+    id  shift, and go to state 12
+
+    id_list  go to state 13
+
+
+State 7
+
+    1 program: program_name variable_const_declaration . func_define_declaration compound_statement KWend
+
+    id  shift, and go to state 14
+
+    $default  reduce using rule 8 (func_define_declaration)
+
+    func_define_declaration  go to state 15
+    func_declaration         go to state 16
+    functiond                go to state 17
+
+
+State 8
+
+    3 variable_const_declaration: vcd2 .
+    6 vcd2: vcd2 . variable_declaration
+    7     | vcd2 . const_declaration
+
+    KWvar  shift, and go to state 6
+
+    $default  reduce using rule 3 (variable_const_declaration)
+
+    variable_declaration  go to state 18
+    array_declaration     go to state 10
+    const_declaration     go to state 19
+
+
+State 9
+
+    4 vcd2: variable_declaration .
+
+    $default  reduce using rule 4 (vcd2)
+
+
+State 10
+
+   11 variable_declaration: array_declaration .
+
+    $default  reduce using rule 11 (variable_declaration)
+
+
+State 11
+
+    5 vcd2: const_declaration .
+
+    $default  reduce using rule 5 (vcd2)
+
+
+State 12
+
+   31 id_list: id .
+
+    $default  reduce using rule 31 (id_list)
+
+
+State 13
+
+   10 variable_declaration: KWvar id_list . ':' variable_type ';'
+   12 array_declaration: KWvar id_list . ':' integer KWof variable_type ';'
+   18 const_declaration: KWvar id_list . ':' datatype ';'
+   32 id_list: id_list . ',' id
+
+    ':'  shift, and go to state 20
+    ','  shift, and go to state 21
+
+
+State 14
+
+   25 functiond: id . '(' argument ')' ':' variable_type functiond2
+
+    '('  shift, and go to state 22
+
+
+State 15
+
+    1 program: program_name variable_const_declaration func_define_declaration . compound_statement KWend
+
+    KWbegin  shift, and go to state 23
+
+    compound_statement  go to state 24
+
+
+State 16
+
+    9 func_define_declaration: func_declaration .
+   24 func_declaration: func_declaration . functiond
+
+    id  shift, and go to state 14
+
+    $default  reduce using rule 9 (func_define_declaration)
+
+    functiond  go to state 25
+
+
+State 17
+
+   23 func_declaration: functiond .
+
+    $default  reduce using rule 23 (func_declaration)
+
+
+State 18
+
+    6 vcd2: vcd2 variable_declaration .
+
+    $default  reduce using rule 6 (vcd2)
+
+
+State 19
+
+    7 vcd2: vcd2 const_declaration .
+
+    $default  reduce using rule 7 (vcd2)
+
+
+State 20
+
+   10 variable_declaration: KWvar id_list ':' . variable_type ';'
+   12 array_declaration: KWvar id_list ':' . integer KWof variable_type ';'
+   18 const_declaration: KWvar id_list ':' . datatype ';'
+
+    KWarray    shift, and go to state 26
+    KWboolean  shift, and go to state 27
+    KWreal     shift, and go to state 28
+    KWstring   shift, and go to state 29
+    KWinteger  shift, and go to state 30
+    integer    shift, and go to state 31
+    floatt     shift, and go to state 32
+    string     shift, and go to state 33
+
+    variable_type  go to state 34
+    datatype       go to state 35
+
+
+State 21
+
+   32 id_list: id_list ',' . id
+
+    id  shift, and go to state 36
+
+
+State 22
+
+   25 functiond: id '(' . argument ')' ':' variable_type functiond2
+
+    id  shift, and go to state 12
+
+    argument   go to state 37
+    argument2  go to state 38
+    id_list    go to state 39
+
+
+State 23
+
+   49 compound_statement: KWbegin . variable_const_declaration statement KWend
+
+    KWvar  shift, and go to state 6
+
+    $default  reduce using rule 2 (variable_const_declaration)
+
+    variable_const_declaration  go to state 40
+    vcd2                        go to state 8
+    variable_declaration        go to state 9
+    array_declaration           go to state 10
+    const_declaration           go to state 11
+
+
+State 24
+
+    1 program: program_name variable_const_declaration func_define_declaration compound_statement . KWend
+
+    KWend  shift, and go to state 41
+
+
+State 25
+
+   24 func_declaration: func_declaration functiond .
+
+    $default  reduce using rule 24 (func_declaration)
+
+
+State 26
+
+   13 variable_type: KWarray .
+
+    $default  reduce using rule 13 (variable_type)
+
+
+State 27
+
+   14 variable_type: KWboolean .
+
+    $default  reduce using rule 14 (variable_type)
+
+
+State 28
+
+   15 variable_type: KWreal .
+
+    $default  reduce using rule 15 (variable_type)
+
+
+State 29
+
+   16 variable_type: KWstring .
+
+    $default  reduce using rule 16 (variable_type)
+
+
+State 30
+
+   17 variable_type: KWinteger .
+
+    $default  reduce using rule 17 (variable_type)
+
+
+State 31
+
+   12 array_declaration: KWvar id_list ':' integer . KWof variable_type ';'
+   19 datatype: integer .
+
+    KWof  shift, and go to state 42
+
+    $default  reduce using rule 19 (datatype)
+
+
+State 32
+
+   20 datatype: floatt .
+
+    $default  reduce using rule 20 (datatype)
+
+
+State 33
+
+   21 datatype: string .
+
+    $default  reduce using rule 21 (datatype)
+
+
+State 34
+
+   10 variable_declaration: KWvar id_list ':' variable_type . ';'
+
+    ';'  shift, and go to state 43
+
+
+State 35
+
+   18 const_declaration: KWvar id_list ':' datatype . ';'
+
+    ';'  shift, and go to state 44
+
+
+State 36
+
+   32 id_list: id_list ',' id .
+
+    $default  reduce using rule 32 (id_list)
+
+
+State 37
+
+   25 functiond: id '(' argument . ')' ':' variable_type functiond2
+   29 argument: argument . ';' argument2
+
+    ';'  shift, and go to state 45
+    ')'  shift, and go to state 46
+
+
+State 38
+
+   28 argument: argument2 .
+
+    $default  reduce using rule 28 (argument)
+
+
+State 39
+
+   30 argument2: id_list . ':' variable_type
+   32 id_list: id_list . ',' id
+
+    ':'  shift, and go to state 47
+    ','  shift, and go to state 21
+
+
+State 40
+
+   49 compound_statement: KWbegin variable_const_declaration . statement KWend
+
+    id        shift, and go to state 48
+    KWbegin   shift, and go to state 23
+    KWfor     shift, and go to state 49
+    KWif      shift, and go to state 50
+    KWprint   shift, and go to state 51
+    KWread    shift, and go to state 52
+    KWreturn  shift, and go to state 53
+    KWwhile   shift, and go to state 54
+
+    $default  reduce using rule 33 (statement)
+
+    statement              go to state 55
+    statement2             go to state 56
+    compound_statement     go to state 57
+    simple_statement       go to state 58
+    variable_reference     go to state 59
+    array                  go to state 60
+    conditional_statement  go to state 61
+    while_statement        go to state 62
+    for_statement          go to state 63
+    return_statement       go to state 64
+    procedure_statement    go to state 65
+
+
+State 41
+
+    1 program: program_name variable_const_declaration func_define_declaration compound_statement KWend .
+
+    $default  reduce using rule 1 (program)
+
+
+State 42
+
+   12 array_declaration: KWvar id_list ':' integer KWof . variable_type ';'
+
+    KWarray    shift, and go to state 26
+    KWboolean  shift, and go to state 27
+    KWreal     shift, and go to state 28
+    KWstring   shift, and go to state 29
+    KWinteger  shift, and go to state 30
+
+    variable_type  go to state 66
+
+
+State 43
+
+   10 variable_declaration: KWvar id_list ':' variable_type ';' .
+
+    $default  reduce using rule 10 (variable_declaration)
+
+
+State 44
+
+   18 const_declaration: KWvar id_list ':' datatype ';' .
+
+    $default  reduce using rule 18 (const_declaration)
+
+
+State 45
+
+   29 argument: argument ';' . argument2
+
+    id  shift, and go to state 12
+
+    argument2  go to state 67
+    id_list    go to state 39
+
+
+State 46
+
+   25 functiond: id '(' argument ')' . ':' variable_type functiond2
+
+    ':'  shift, and go to state 68
+
+
+State 47
+
+   30 argument2: id_list ':' . variable_type
+
+    KWarray    shift, and go to state 26
+    KWboolean  shift, and go to state 27
+    KWreal     shift, and go to state 28
+    KWstring   shift, and go to state 29
+    KWinteger  shift, and go to state 30
+
+    variable_type  go to state 69
+
+
+State 48
+
+   54 variable_reference: id .
+   56 array: id . array2
+   64 procedure_statement: id . '(' expression_list ')' ';'
+
+    '('  shift, and go to state 70
+    '['  shift, and go to state 71
+
+    $default  reduce using rule 54 (variable_reference)
+
+    array2  go to state 72
+
+
+State 49
+
+   62 for_statement: KWfor . id aaa integer KWto integer KWdo compound_statement KWend KWdo
+
+    id  shift, and go to state 73
+
+
+State 50
+
+   59 conditional_statement: KWif . expression KWthen compound_statement KWelse compound_statement KWend KWif
+   60                      | KWif . expression KWthen compound_statement KWend KWif
+
+    integer  shift, and go to state 74
+    floatt   shift, and go to state 75
+
+    expression      go to state 76
+    expression_val  go to state 77
+
+
+State 51
+
+   51 simple_statement: KWprint . variable_reference
+   52                 | KWprint . expression
+
+    id       shift, and go to state 78
+    integer  shift, and go to state 74
+    floatt   shift, and go to state 75
+
+    variable_reference  go to state 79
+    array               go to state 60
+    expression          go to state 80
+    expression_val      go to state 77
+
+
+State 52
+
+   53 simple_statement: KWread . variable_reference
+
+    id  shift, and go to state 78
+
+    variable_reference  go to state 81
+    array               go to state 60
+
+
+State 53
+
+   63 return_statement: KWreturn . expression ';'
+
+    integer  shift, and go to state 74
+    floatt   shift, and go to state 75
+
+    expression      go to state 82
+    expression_val  go to state 77
+
+
+State 54
+
+   61 while_statement: KWwhile . expression KWdo compound_statement KWend KWdo
+
+    integer  shift, and go to state 74
+    floatt   shift, and go to state 75
+
+    expression      go to state 83
+    expression_val  go to state 77
+
+
+State 55
+
+   49 compound_statement: KWbegin variable_const_declaration statement . KWend
+
+    KWend  shift, and go to state 84
+
+
+State 56
+
+   34 statement: statement2 .
+   42 statement2: statement2 . compound_statement
+   43           | statement2 . simple_statement
+   44           | statement2 . conditional_statement
+   45           | statement2 . while_statement
+   46           | statement2 . for_statement
+   47           | statement2 . return_statement
+   48           | statement2 . procedure_statement
+
+    id        shift, and go to state 48
+    KWbegin   shift, and go to state 23
+    KWfor     shift, and go to state 49
+    KWif      shift, and go to state 50
+    KWprint   shift, and go to state 51
+    KWread    shift, and go to state 52
+    KWreturn  shift, and go to state 53
+    KWwhile   shift, and go to state 54
+
+    $default  reduce using rule 34 (statement)
+
+    compound_statement     go to state 85
+    simple_statement       go to state 86
+    variable_reference     go to state 59
+    array                  go to state 60
+    conditional_statement  go to state 87
+    while_statement        go to state 88
+    for_statement          go to state 89
+    return_statement       go to state 90
+    procedure_statement    go to state 91
+
+
+State 57
+
+   35 statement2: compound_statement .
+
+    $default  reduce using rule 35 (statement2)
+
+
+State 58
+
+   36 statement2: simple_statement .
+
+    $default  reduce using rule 36 (statement2)
+
+
+State 59
+
+   50 simple_statement: variable_reference . aaa expression
+
+    aaa  shift, and go to state 92
+
+
+State 60
+
+   55 variable_reference: array .
+
+    $default  reduce using rule 55 (variable_reference)
+
+
+State 61
+
+   37 statement2: conditional_statement .
+
+    $default  reduce using rule 37 (statement2)
+
+
+State 62
+
+   38 statement2: while_statement .
+
+    $default  reduce using rule 38 (statement2)
+
+
+State 63
+
+   39 statement2: for_statement .
+
+    $default  reduce using rule 39 (statement2)
+
+
+State 64
+
+   40 statement2: return_statement .
+
+    $default  reduce using rule 40 (statement2)
+
+
+State 65
+
+   41 statement2: procedure_statement .
+
+    $default  reduce using rule 41 (statement2)
+
+
+State 66
+
+   12 array_declaration: KWvar id_list ':' integer KWof variable_type . ';'
+
+    ';'  shift, and go to state 93
+
+
+State 67
+
+   29 argument: argument ';' argument2 .
+
+    $default  reduce using rule 29 (argument)
+
+
+State 68
+
+   25 functiond: id '(' argument ')' ':' . variable_type functiond2
+
+    KWarray    shift, and go to state 26
+    KWboolean  shift, and go to state 27
+    KWreal     shift, and go to state 28
+    KWstring   shift, and go to state 29
+    KWinteger  shift, and go to state 30
+
+    variable_type  go to state 94
+
+
+State 69
+
+   30 argument2: id_list ':' variable_type .
+
+    $default  reduce using rule 30 (argument2)
+
+
+State 70
+
+   64 procedure_statement: id '(' . expression_list ')' ';'
+
+    integer  shift, and go to state 74
+    floatt   shift, and go to state 75
+
+    expression_list  go to state 95
+    expression       go to state 96
+    expression_val   go to state 77
+
+
+State 71
+
+   57 array2: '[' . expression ']'
+
+    integer  shift, and go to state 74
+    floatt   shift, and go to state 75
+
+    expression      go to state 97
+    expression_val  go to state 77
+
+
+State 72
+
+   56 array: id array2 .
+   58 array2: array2 . '[' expression ']'
+
+    '['  shift, and go to state 98
+
+    $default  reduce using rule 56 (array)
+
+
+State 73
+
+   62 for_statement: KWfor id . aaa integer KWto integer KWdo compound_statement KWend KWdo
+
+    aaa  shift, and go to state 99
+
+
+State 74
+
+   69 expression_val: integer .
+
+    $default  reduce using rule 69 (expression_val)
+
+
+State 75
+
+   70 expression_val: floatt .
+
+    $default  reduce using rule 70 (expression_val)
+
+
+State 76
+
+   59 conditional_statement: KWif expression . KWthen compound_statement KWelse compound_statement KWend KWif
+   60                      | KWif expression . KWthen compound_statement KWend KWif
+   68 expression: expression . operator expression_val
+
+    KWthen  shift, and go to state 100
+    mod     shift, and go to state 101
+    bbb     shift, and go to state 102
+    ccc     shift, and go to state 103
+    ddd     shift, and go to state 104
+    and     shift, and go to state 105
+    or      shift, and go to state 106
+    not     shift, and go to state 107
+    '+'     shift, and go to state 108
+    '-'     shift, and go to state 109
+    '*'     shift, and go to state 110
+    '/'     shift, and go to state 111
+    '='     shift, and go to state 112
+    '<'     shift, and go to state 113
+    '>'     shift, and go to state 114
+
+    operator  go to state 115
+    nott      go to state 116
+    negative  go to state 117
+
+
+State 77
+
+   67 expression: expression_val .
+
+    $default  reduce using rule 67 (expression)
+
+
+State 78
+
+   54 variable_reference: id .
+   56 array: id . array2
+
+    '['  shift, and go to state 71
+
+    $default  reduce using rule 54 (variable_reference)
+
+    array2  go to state 72
+
+
+State 79
+
+   51 simple_statement: KWprint variable_reference .
+
+    $default  reduce using rule 51 (simple_statement)
+
+
+State 80
+
+   52 simple_statement: KWprint expression .
+   68 expression: expression . operator expression_val
+
+    mod  shift, and go to state 101
+    bbb  shift, and go to state 102
+    ccc  shift, and go to state 103
+    ddd  shift, and go to state 104
+    and  shift, and go to state 105
+    or   shift, and go to state 106
+    not  shift, and go to state 107
+    '+'  shift, and go to state 108
+    '-'  shift, and go to state 109
+    '*'  shift, and go to state 110
+    '/'  shift, and go to state 111
+    '='  shift, and go to state 112
+    '<'  shift, and go to state 113
+    '>'  shift, and go to state 114
+
+    $default  reduce using rule 52 (simple_statement)
+
+    operator  go to state 115
+    nott      go to state 116
+    negative  go to state 117
+
+
+State 81
+
+   53 simple_statement: KWread variable_reference .
+
+    $default  reduce using rule 53 (simple_statement)
+
+
+State 82
+
+   63 return_statement: KWreturn expression . ';'
+   68 expression: expression . operator expression_val
+
+    mod  shift, and go to state 101
+    bbb  shift, and go to state 102
+    ccc  shift, and go to state 103
+    ddd  shift, and go to state 104
+    and  shift, and go to state 105
+    or   shift, and go to state 106
+    not  shift, and go to state 107
+    '+'  shift, and go to state 108
+    '-'  shift, and go to state 109
+    '*'  shift, and go to state 110
+    '/'  shift, and go to state 111
+    '='  shift, and go to state 112
+    ';'  shift, and go to state 118
+    '<'  shift, and go to state 113
+    '>'  shift, and go to state 114
+
+    operator  go to state 115
+    nott      go to state 116
+    negative  go to state 117
+
+
+State 83
+
+   61 while_statement: KWwhile expression . KWdo compound_statement KWend KWdo
+   68 expression: expression . operator expression_val
+
+    KWdo  shift, and go to state 119
+    mod   shift, and go to state 101
+    bbb   shift, and go to state 102
+    ccc   shift, and go to state 103
+    ddd   shift, and go to state 104
+    and   shift, and go to state 105
+    or    shift, and go to state 106
+    not   shift, and go to state 107
+    '+'   shift, and go to state 108
+    '-'   shift, and go to state 109
+    '*'   shift, and go to state 110
+    '/'   shift, and go to state 111
+    '='   shift, and go to state 112
+    '<'   shift, and go to state 113
+    '>'   shift, and go to state 114
+
+    operator  go to state 115
+    nott      go to state 116
+    negative  go to state 117
+
+
+State 84
+
+   49 compound_statement: KWbegin variable_const_declaration statement KWend .
+
+    $default  reduce using rule 49 (compound_statement)
+
+
+State 85
+
+   42 statement2: statement2 compound_statement .
+
+    $default  reduce using rule 42 (statement2)
+
+
+State 86
+
+   43 statement2: statement2 simple_statement .
+
+    $default  reduce using rule 43 (statement2)
+
+
+State 87
+
+   44 statement2: statement2 conditional_statement .
+
+    $default  reduce using rule 44 (statement2)
+
+
+State 88
+
+   45 statement2: statement2 while_statement .
+
+    $default  reduce using rule 45 (statement2)
+
+
+State 89
+
+   46 statement2: statement2 for_statement .
+
+    $default  reduce using rule 46 (statement2)
+
+
+State 90
+
+   47 statement2: statement2 return_statement .
+
+    $default  reduce using rule 47 (statement2)
+
+
+State 91
+
+   48 statement2: statement2 procedure_statement .
+
+    $default  reduce using rule 48 (statement2)
+
+
+State 92
+
+   50 simple_statement: variable_reference aaa . expression
+
+    integer  shift, and go to state 74
+    floatt   shift, and go to state 75
+
+    expression      go to state 120
+    expression_val  go to state 77
+
+
+State 93
+
+   12 array_declaration: KWvar id_list ':' integer KWof variable_type ';' .
+
+    $default  reduce using rule 12 (array_declaration)
+
+
+State 94
+
+   25 functiond: id '(' argument ')' ':' variable_type . functiond2
+
+    id        shift, and go to state 48
+    KWbegin   shift, and go to state 23
+    KWfor     shift, and go to state 49
+    KWif      shift, and go to state 50
+    KWprint   shift, and go to state 51
+    KWread    shift, and go to state 52
+    KWreturn  shift, and go to state 53
+    KWwhile   shift, and go to state 54
+    ';'       shift, and go to state 121
+
+    $default  reduce using rule 33 (statement)
+
+    functiond2             go to state 122
+    statement              go to state 123
+    statement2             go to state 56
+    compound_statement     go to state 57
+    simple_statement       go to state 58
+    variable_reference     go to state 59
+    array                  go to state 60
+    conditional_statement  go to state 61
+    while_statement        go to state 62
+    for_statement          go to state 63
+    return_statement       go to state 64
+    procedure_statement    go to state 65
+
+
+State 95
+
+   64 procedure_statement: id '(' expression_list . ')' ';'
+   66 expression_list: expression_list . ',' expression
+
+    ')'  shift, and go to state 124
+    ','  shift, and go to state 125
+
+
+State 96
+
+   65 expression_list: expression .
+   68 expression: expression . operator expression_val
+
+    mod  shift, and go to state 101
+    bbb  shift, and go to state 102
+    ccc  shift, and go to state 103
+    ddd  shift, and go to state 104
+    and  shift, and go to state 105
+    or   shift, and go to state 106
+    not  shift, and go to state 107
+    '+'  shift, and go to state 108
+    '-'  shift, and go to state 109
+    '*'  shift, and go to state 110
+    '/'  shift, and go to state 111
+    '='  shift, and go to state 112
+    '<'  shift, and go to state 113
+    '>'  shift, and go to state 114
+
+    $default  reduce using rule 65 (expression_list)
+
+    operator  go to state 115
+    nott      go to state 116
+    negative  go to state 117
+
+
+State 97
+
+   57 array2: '[' expression . ']'
+   68 expression: expression . operator expression_val
+
+    mod  shift, and go to state 101
+    bbb  shift, and go to state 102
+    ccc  shift, and go to state 103
+    ddd  shift, and go to state 104
+    and  shift, and go to state 105
+    or   shift, and go to state 106
+    not  shift, and go to state 107
+    '+'  shift, and go to state 108
+    '-'  shift, and go to state 109
+    '*'  shift, and go to state 110
+    '/'  shift, and go to state 111
+    '='  shift, and go to state 112
+    ']'  shift, and go to state 126
+    '<'  shift, and go to state 113
+    '>'  shift, and go to state 114
+
+    operator  go to state 115
+    nott      go to state 116
+    negative  go to state 117
+
+
+State 98
+
+   58 array2: array2 '[' . expression ']'
+
+    integer  shift, and go to state 74
+    floatt   shift, and go to state 75
+
+    expression      go to state 127
+    expression_val  go to state 77
+
+
+State 99
+
+   62 for_statement: KWfor id aaa . integer KWto integer KWdo compound_statement KWend KWdo
+
+    integer  shift, and go to state 128
+
+
+State 100
+
+   59 conditional_statement: KWif expression KWthen . compound_statement KWelse compound_statement KWend KWif
+   60                      | KWif expression KWthen . compound_statement KWend KWif
+
+    KWbegin  shift, and go to state 23
+
+    compound_statement  go to state 129
+
+
+State 101
+
+   74 operator: mod .
+
+    $default  reduce using rule 74 (operator)
+
+
+State 102
+
+   78 operator: bbb .
+
+    $default  reduce using rule 78 (operator)
+
+
+State 103
+
+   79 operator: ccc .
+
+    $default  reduce using rule 79 (operator)
+
+
+State 104
+
+   80 operator: ddd .
+
+    $default  reduce using rule 80 (operator)
+
+
+State 105
+
+   83 operator: and .
+
+    $default  reduce using rule 83 (operator)
+
+
+State 106
+
+   84 operator: or .
+
+    $default  reduce using rule 84 (operator)
+
+
+State 107
+
+   86 nott: not . not
+
+    not  shift, and go to state 130
+
+
+State 108
+
+   75 operator: '+' .
+
+    $default  reduce using rule 75 (operator)
+
+
+State 109
+
+   76 operator: '-' .
+   88 negative: '-' . '-'
+
+    '-'  shift, and go to state 131
+
+    $default  reduce using rule 76 (operator)
+
+
+State 110
+
+   72 operator: '*' .
+
+    $default  reduce using rule 72 (operator)
+
+
+State 111
+
+   73 operator: '/' .
+
+    $default  reduce using rule 73 (operator)
+
+
+State 112
+
+   82 operator: '=' .
+
+    $default  reduce using rule 82 (operator)
+
+
+State 113
+
+   77 operator: '<' .
+
+    $default  reduce using rule 77 (operator)
+
+
+State 114
+
+   81 operator: '>' .
+
+    $default  reduce using rule 81 (operator)
+
+
+State 115
+
+   68 expression: expression operator . expression_val
+
+    integer  shift, and go to state 74
+    floatt   shift, and go to state 75
+
+    expression_val  go to state 132
+
+
+State 116
+
+   85 operator: nott .
+   87 nott: nott . not
+
+    not  shift, and go to state 133
+
+    $default  reduce using rule 85 (operator)
+
+
+State 117
+
+   71 operator: negative .
+   89 negative: negative . '-'
+
+    '-'  shift, and go to state 134
+
+    $default  reduce using rule 71 (operator)
+
+
+State 118
+
+   63 return_statement: KWreturn expression ';' .
+
+    $default  reduce using rule 63 (return_statement)
+
+
+State 119
+
+   61 while_statement: KWwhile expression KWdo . compound_statement KWend KWdo
+
+    KWbegin  shift, and go to state 23
+
+    compound_statement  go to state 135
+
+
+State 120
+
+   50 simple_statement: variable_reference aaa expression .
+   68 expression: expression . operator expression_val
+
+    mod  shift, and go to state 101
+    bbb  shift, and go to state 102
+    ccc  shift, and go to state 103
+    ddd  shift, and go to state 104
+    and  shift, and go to state 105
+    or   shift, and go to state 106
+    not  shift, and go to state 107
+    '+'  shift, and go to state 108
+    '-'  shift, and go to state 109
+    '*'  shift, and go to state 110
+    '/'  shift, and go to state 111
+    '='  shift, and go to state 112
+    '<'  shift, and go to state 113
+    '>'  shift, and go to state 114
+
+    $default  reduce using rule 50 (simple_statement)
+
+    operator  go to state 115
+    nott      go to state 116
+    negative  go to state 117
+
+
+State 121
+
+   26 functiond2: ';' .
+
+    $default  reduce using rule 26 (functiond2)
+
+
+State 122
+
+   25 functiond: id '(' argument ')' ':' variable_type functiond2 .
+
+    $default  reduce using rule 25 (functiond)
+
+
+State 123
+
+   27 functiond2: statement . KWend
+
+    KWend  shift, and go to state 136
+
+
+State 124
+
+   64 procedure_statement: id '(' expression_list ')' . ';'
+
+    ';'  shift, and go to state 137
+
+
+State 125
+
+   66 expression_list: expression_list ',' . expression
+
+    integer  shift, and go to state 74
+    floatt   shift, and go to state 75
+
+    expression      go to state 138
+    expression_val  go to state 77
+
+
+State 126
+
+   57 array2: '[' expression ']' .
+
+    $default  reduce using rule 57 (array2)
+
+
+State 127
+
+   58 array2: array2 '[' expression . ']'
+   68 expression: expression . operator expression_val
+
+    mod  shift, and go to state 101
+    bbb  shift, and go to state 102
+    ccc  shift, and go to state 103
+    ddd  shift, and go to state 104
+    and  shift, and go to state 105
+    or   shift, and go to state 106
+    not  shift, and go to state 107
+    '+'  shift, and go to state 108
+    '-'  shift, and go to state 109
+    '*'  shift, and go to state 110
+    '/'  shift, and go to state 111
+    '='  shift, and go to state 112
+    ']'  shift, and go to state 139
+    '<'  shift, and go to state 113
+    '>'  shift, and go to state 114
+
+    operator  go to state 115
+    nott      go to state 116
+    negative  go to state 117
+
+
+State 128
+
+   62 for_statement: KWfor id aaa integer . KWto integer KWdo compound_statement KWend KWdo
+
+    KWto  shift, and go to state 140
+
+
+State 129
+
+   59 conditional_statement: KWif expression KWthen compound_statement . KWelse compound_statement KWend KWif
+   60                      | KWif expression KWthen compound_statement . KWend KWif
+
+    KWelse  shift, and go to state 141
+    KWend   shift, and go to state 142
+
+
+State 130
+
+   86 nott: not not .
+
+    $default  reduce using rule 86 (nott)
+
+
+State 131
+
+   88 negative: '-' '-' .
+
+    $default  reduce using rule 88 (negative)
+
+
+State 132
+
+   68 expression: expression operator expression_val .
+
+    $default  reduce using rule 68 (expression)
+
+
+State 133
+
+   87 nott: nott not .
+
+    $default  reduce using rule 87 (nott)
+
+
+State 134
+
+   89 negative: negative '-' .
+
+    $default  reduce using rule 89 (negative)
+
+
+State 135
+
+   61 while_statement: KWwhile expression KWdo compound_statement . KWend KWdo
+
+    KWend  shift, and go to state 143
+
+
+State 136
+
+   27 functiond2: statement KWend .
+
+    $default  reduce using rule 27 (functiond2)
+
+
+State 137
+
+   64 procedure_statement: id '(' expression_list ')' ';' .
+
+    $default  reduce using rule 64 (procedure_statement)
+
+
+State 138
+
+   66 expression_list: expression_list ',' expression .
+   68 expression: expression . operator expression_val
+
+    mod  shift, and go to state 101
+    bbb  shift, and go to state 102
+    ccc  shift, and go to state 103
+    ddd  shift, and go to state 104
+    and  shift, and go to state 105
+    or   shift, and go to state 106
+    not  shift, and go to state 107
+    '+'  shift, and go to state 108
+    '-'  shift, and go to state 109
+    '*'  shift, and go to state 110
+    '/'  shift, and go to state 111
+    '='  shift, and go to state 112
+    '<'  shift, and go to state 113
+    '>'  shift, and go to state 114
+
+    $default  reduce using rule 66 (expression_list)
+
+    operator  go to state 115
+    nott      go to state 116
+    negative  go to state 117
+
+
+State 139
+
+   58 array2: array2 '[' expression ']' .
+
+    $default  reduce using rule 58 (array2)
+
+
+State 140
+
+   62 for_statement: KWfor id aaa integer KWto . integer KWdo compound_statement KWend KWdo
+
+    integer  shift, and go to state 144
+
+
+State 141
+
+   59 conditional_statement: KWif expression KWthen compound_statement KWelse . compound_statement KWend KWif
+
+    KWbegin  shift, and go to state 23
+
+    compound_statement  go to state 145
+
+
+State 142
+
+   60 conditional_statement: KWif expression KWthen compound_statement KWend . KWif
+
+    KWif  shift, and go to state 146
+
+
+State 143
+
+   61 while_statement: KWwhile expression KWdo compound_statement KWend . KWdo
+
+    KWdo  shift, and go to state 147
+
+
+State 144
+
+   62 for_statement: KWfor id aaa integer KWto integer . KWdo compound_statement KWend KWdo
+
+    KWdo  shift, and go to state 148
+
+
+State 145
+
+   59 conditional_statement: KWif expression KWthen compound_statement KWelse compound_statement . KWend KWif
+
+    KWend  shift, and go to state 149
+
+
+State 146
+
+   60 conditional_statement: KWif expression KWthen compound_statement KWend KWif .
+
+    $default  reduce using rule 60 (conditional_statement)
+
+
+State 147
+
+   61 while_statement: KWwhile expression KWdo compound_statement KWend KWdo .
+
+    $default  reduce using rule 61 (while_statement)
+
+
+State 148
+
+   62 for_statement: KWfor id aaa integer KWto integer KWdo . compound_statement KWend KWdo
+
+    KWbegin  shift, and go to state 23
+
+    compound_statement  go to state 150
+
+
+State 149
+
+   59 conditional_statement: KWif expression KWthen compound_statement KWelse compound_statement KWend . KWif
+
+    KWif  shift, and go to state 151
+
+
+State 150
+
+   62 for_statement: KWfor id aaa integer KWto integer KWdo compound_statement . KWend KWdo
+
+    KWend  shift, and go to state 152
+
+
+State 151
+
+   59 conditional_statement: KWif expression KWthen compound_statement KWelse compound_statement KWend KWif .
+
+    $default  reduce using rule 59 (conditional_statement)
+
+
+State 152
+
+   62 for_statement: KWfor id aaa integer KWto integer KWdo compound_statement KWend . KWdo
+
+    KWdo  shift, and go to state 153
+
+
+State 153
+
+   62 for_statement: KWfor id aaa integer KWto integer KWdo compound_statement KWend KWdo .
+
+    $default  reduce using rule 62 (for_statement)
